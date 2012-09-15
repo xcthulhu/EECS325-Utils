@@ -229,10 +229,13 @@ forgot the USE-PACKAGE. Do this to fix things:
     (let ((eof (list nil)))
       (do ((code (read in nil eof) (read in nil eof)))
           ((eq code eof) (values))
-        (print-separator out #\*)
-        (let ((*print-right-margin* *output-width*))
-          (pprint code out))
-        (critique-definition code out names)))))
+        (let ((critiques-stream (make-string-output-stream)))
+          (critique-definition code critiques-stream names)
+          (let ((critiques-string (get-output-stream-string critiques-stream)))
+            (unless (equal "" critiques-string)
+              (let ((*print-right-margin* *output-width*))
+                (pprint code out)
+                (format out "~a" critiques-string)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
