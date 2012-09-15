@@ -246,10 +246,10 @@ forgot the USE-PACKAGE. Do this to fix things:
 (defun print-critique-responses (critiques 
                                  &optional (stream *standard-output*))
   (let ((*print-pretty* nil))
-    (print-separator stream)
     (dolist (critique critiques)
-      (print-critique-response critique stream))))
-
+      (print-separator stream)
+      (print-critique-response critique stream))
+    (when critiques (print-separator stream))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; FIND-CRITIQUES
@@ -289,8 +289,7 @@ forgot the USE-PACKAGE. Do this to fix things:
             (t 
              (write-wrap stream 
                          (make-response-string name response blist)
-                         *output-width*)))
-      (print-separator stream))))
+                         *output-width*))))))
 
 (defun make-response-string (name response blist)
   (declare (ignore name))
@@ -651,6 +650,4 @@ forgot the USE-PACKAGE. Do this to fix things:
   (and (symbolp x)
        (member x '(for with and) :test #'string=)))
               
-
-
 (provide "lisp-critic")
