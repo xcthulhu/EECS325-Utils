@@ -141,7 +141,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 (let ((flag (list nil)))
   (defun in-table-p (key table)
-    (not (eq flag (gethash key table flag)))))
+    (not (eql flag (gethash key table flag)))))
 
 (defun remove-key (key table) (remhash key table))
 
