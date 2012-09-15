@@ -129,8 +129,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(in-package #:cs325-user)
-
+(in-package :lisp-critic)
 
 ;;; Should add:
 ;;;   Catch (format t "..." arg) where "..." takes no arguments
