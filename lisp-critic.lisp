@@ -107,7 +107,7 @@ forgot the USE-PACKAGE. Do this to fix things:
 (cl:defpackage #:lisp-critic
   (:use  #:common-lisp #:tables #:extend-match)
   (:import-from #:extend-match #:match-and)
-  (:export #:critique #:critique-file #:critique-definition
+  (:export #:critique #:critique-file #:critique-stream #:critique-definition
            #:apply-critique-rule
            #:lisp-critic-version
            #:add-lisp-pattern #:define-lisp-pattern #:remove-lisp-pattern
@@ -224,18 +224,27 @@ forgot the USE-PACKAGE. Do this to fix things:
     (values))
 
 (defun critique-file
-       (file &optional (out *standard-output*) (names (get-pattern-names)))
-  (with-open-file (in file)
-    (let ((eof (list nil)))
-      (do ((code (read in nil eof) (read in nil eof)))
-          ((eq code eof) (values))
-        (let ((critiques-stream (make-string-output-stream)))
-          (critique-definition code critiques-stream names)
-          (let ((critiques-string (get-output-stream-string critiques-stream)))
-            (unless (equal "" critiques-string)
-              (let ((*print-right-margin* *output-width*))
-                (pprint code out)
-                (format out "~a" critiques-string)))))))))
+       (&optional (file nil)
+                  (out *standard-output*) 
+                  (names (get-pattern-names)))
+  (if file
+      (with-open-file (in file) (critique-stream in out names))
+      (critique-stream *standard-input* out names)))
+
+(defun critique-stream 
+       (&optional (in *standard-input*) 
+                  (out *standard-output*) 
+                  (names (get-pattern-names)))
+  (let ((eof (list nil)))
+    (do ((code (read in nil eof) (read in nil eof)))
+        ((eq code eof) (values))
+      (let ((critiques-stream (make-string-output-stream)))
+        (critique-definition code critiques-stream names)
+        (let ((critiques-string (get-output-stream-string critiques-stream)))
+          (unless (equal "" critiques-string)
+            (let ((*print-right-margin* *output-width*))
+              (pprint code out)
+              (format out "~a" critiques-string))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
