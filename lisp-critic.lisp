@@ -198,7 +198,7 @@ forgot the USE-PACKAGE. Do this to fix things:
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; CRITIQUE, -DEFINITION, CRITIQUE-FILE
+;;; CRITIQUE, -DEFINITION, CRITIQUE-STREAM, CRITIQUE-FILE
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmacro critique (form)
@@ -215,10 +215,10 @@ forgot the USE-PACKAGE. Do this to fix things:
                     (or (atom (cadr defn))
                         (and  (eql (caadr defn) 'quote)
                               (atom (cadadr defn))))))
-           (format t "~&Can't critique ~S -- I need the actual definition~%"
+           (format t "~&Cannot critique ~S -- I need the actual definition~%"
                    defn))
           ((null names)
-           (format t "~&You forgot to load bad-lisp.rules~%"))
+           (format t "~&Cannot determine rules - did you remember to load \"lisp-rules.lisp\"?~%"))
           (t
            (print-critique-responses (generate-critiques defn names) out)))
     (values))
