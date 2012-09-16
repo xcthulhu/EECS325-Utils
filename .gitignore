@@ -1,3 +1,5 @@
 critique
+get-tests
+run-tests
 *.fas
 *.lib
