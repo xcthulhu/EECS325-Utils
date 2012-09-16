@@ -4,6 +4,18 @@
 (load "lisp-rules")
 (use-package :lisp-critic)
 
+#| This file generates the "critique" program (using GNU clisp)
+
+Usage: 
+
+$ critique <file1> <file2> ...
+
+For each file, critique scans for common programming mistakes in each function declaration.  If no mistake is found, it prints nothing.  Otherwise it writes the name of the file to standard out, and lists for each problematic function criticisms it found.
+
+If no file is given, *standard-input* is critiqued.
+
+|#
+
 (defun print-DNE-error (file)
   "Writes an error message proclaiming that non-existant files do not exist"
   (format *error-output* "critique: ~a: no such file or directory" file))
@@ -37,10 +49,9 @@
          #+allegro (sys:command-line-arguments)
          #+lispworks sys:*line-arguments-list*
        ))
-  (cond
-    ((null args) (critique-file nil))
-    ((null (cdr args)) (pretty-critique-file (car args)))
-    (T (map nil #'pretty-critique-file args)))
+  (if (null args) 
+      (critique-file nil))
+      (map nil #'pretty-critique-file args)
   (bye)))
 
 
