@@ -19,6 +19,8 @@
    and a warning when no such file exists"
   (if (probe-file file) 
       (let ((critiques (critique-file-string file)))
+           ; Note that EQL does not predictably match strings
+           ; See http://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp
            (unless (equal "" critiques)
                    (format t "~%*** Critiques for ~a ***~%~a" file critiques)))
       (print-DNE-error file)))
