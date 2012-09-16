@@ -102,7 +102,7 @@ For more information, see lisp-unit.html.
 
 (cl:defpackage #:lisp-unit
   (:use #:common-lisp)
-  (:export #:define-test #:run-all-tests #:run-tests
+  (:export #:define-test #:run-all-tests #:run-tests #:run-named-tests
            #:assert-eq #:assert-eql #:assert-equal #:assert-equalp
            #:assert-error #:assert-expands #:assert-false 
            #:assert-equality #:assert-prints #:assert-true
@@ -234,6 +234,14 @@ For more information, see lisp-unit.html.
 
 (defmacro run-tests (&rest names)
   `(run-test-thunks (get-test-thunks ,(if (null names) '(get-tests *package*) `',names))))
+
+(defun run-named-tests (&rest names)
+  "Runs tests named by strings provided as arguments"
+  (let ((tests
+         (map 'list #'(lambda (x) (intern (string-upcase x))) names)))
+  (run-test-thunks (get-test-thunks (if (null tests)
+                                        (get-tests *package*)
+                                        tests)))))
 
 (defun get-test-thunks (names &optional (package *package*))
   (mapcar #'(lambda (name) (get-test-thunk name package))
