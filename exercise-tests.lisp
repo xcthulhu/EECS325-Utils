@@ -104,8 +104,7 @@
 ;;; 01-29-04 added Earl Wagner's tests for LIST-OF [CKR]
 ;;; 01-29-04 added new STABLE-INTERSECTION case [CKR]
 
-
-(in-package :cs325-user)
+(use-package :lisp-unit)
 
 ;;; Chapter 2
 
