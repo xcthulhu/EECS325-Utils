@@ -151,8 +151,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(in-package #+:cltl2 :common-lisp-user #-:cltl2 :user)
-
 (provide "tables")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
