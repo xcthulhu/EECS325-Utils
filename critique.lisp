@@ -16,10 +16,6 @@ If no file is given, *standard-input* is critiqued.
 
 |#
 
-(defun print-DNE-error (file)
-  "Writes an error message proclaiming that non-existant files do not exist"
-  (format *error-output* "critique: ~a: no such file or directory" file))
-
 (defun critique-file-string (file)
   "Returns a string containing output of critique-file"
   (let ((critiques-stream (make-string-output-stream)))
@@ -30,12 +26,14 @@ If no file is given, *standard-input* is critiqued.
   "Critiques a file, providing a header indicating which file is analyzed,
    and a warning when no such file exists"
   (if (probe-file file) 
+      ; then
       (let ((critiques (critique-file-string file)))
            ; Note that EQL does not predictably match strings
            ; See http://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp
            (unless (equal "" critiques)
                    (format t "~%*** Critiques for ~a ***~%~a" file critiques)))
-      (print-DNE-error file)))
+      ; else
+      (error "critique: ~a: no such file or directory" file)))
 
 (defun main ()
   "Main function, parsing command line arguments"
@@ -56,3 +54,4 @@ If no file is given, *standard-input* is critiqued.
 
 
 #+clisp (saveinitmem "critique" :quiet t :norc t :executable t :init-function 'main)
+#+sbcl (sb-ext:save-lisp-and-die "critique" :executable t :toplevel 'main)
