@@ -7,3 +7,4 @@
   (bye))
 
 #+clisp (saveinitmem "get-tests" :quiet t :norc t :executable t :init-function 'main)
+#+sbcl (sb-ext:save-lisp-and-die "get-tests" :executable t :toplevel 'main)

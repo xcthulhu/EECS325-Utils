@@ -1,18 +1,25 @@
+# GNU Common Lisp
+LISP_RUN=clisp -q -norc
+LISP_COMPILE=clisp -c
+
+# Steel Bank Common Lisp
+#LISP_RUN=sbcl --script 
+
 PROGRAMS=critique run-tests get-tests
 
 all : $(PROGRAMS)
 
 %.fas %.lib : %.lisp
-	clisp -c $<
+	$(LISP_COMPILE) $<
 
 critique : critique.lisp
-	clisp -q -norc $<
+	$(LISP_RUN) $<
 
 run-tests : run-tests.lisp
-	clisp -q -norc $<
+	$(LISP_RUN) $<
 
 get-tests : get-tests.lisp
-	clisp -q -norc $<
+	$(LISP_RUN) $<
 
 clean :
 	rm -f *.fas *.lib $(PROGRAMS)
