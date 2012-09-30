@@ -1,4 +1,4 @@
-(load "exit-program")
+(load "babel")
 (load "tables")
 (load "extend-match")
 (load "lisp-critic") 
@@ -28,7 +28,10 @@ If no file is given, *standard-input* is critiqued.
    and a warning when no such file exists"
   (if (probe-file file) 
       ; then
-      (let ((critiques (critique-file-string file)))
+      (let (
+	    (critiques (critique-file-string file))
+	    ;(critiques "Blah")
+	   )
            ; Note that EQL does not predictably match strings
            ; See http://stackoverflow.com/questions/547436/whats-the-difference-between-eq-eql-equal-and-equalp-in-common-lisp
            (unless (equal "" critiques)
@@ -38,20 +41,10 @@ If no file is given, *standard-input* is critiqued.
 
 (defun main ()
   "Main function, parsing command line arguments"
-  (let ((args
-         #+clisp ext:*args*
-         #+sbcl sb-ext:*posix-argv*
-         #+clozure (ccl::command-line-arguments)
-         #+gcl si:*command-args*
-         #+ecl (loop for i from 0 below (si:argc) collect (si:argv i))
-         #+cmu extensions:*command-line-strings*
-         #+allegro (sys:command-line-arguments)
-         #+lispworks sys:*line-arguments-list*
-       ))
-  (unless args (critique-file nil))
-      (map nil #'pretty-critique-file args)
-  (exit-program)))
-
+  (let ((args (cdr (get-args))))
+       (unless args (critique-file nil))
+       (map nil #'pretty-critique-file args)
+       (exit-program)))
 
 #+clisp (saveinitmem "critique" :quiet t :norc t :executable t :init-function 'main)
 #+sbcl (sb-ext:save-lisp-and-die "critique" :executable t :toplevel 'main)

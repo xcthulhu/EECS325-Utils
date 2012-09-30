@@ -1,4 +1,4 @@
-(load "exit-program")
+(load "babel")
 (load "lisp-unit") 
 (load "exercise-tests")
 (use-package :lisp-unit)
