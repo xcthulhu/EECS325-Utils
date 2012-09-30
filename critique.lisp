@@ -1,3 +1,4 @@
+(load "exit-program")
 (load "tables")
 (load "extend-match")
 (load "lisp-critic") 
@@ -47,10 +48,9 @@ If no file is given, *standard-input* is critiqued.
          #+allegro (sys:command-line-arguments)
          #+lispworks sys:*line-arguments-list*
        ))
-  (if (null args) 
-      (critique-file nil))
+  (unless args (critique-file nil))
       (map nil #'pretty-critique-file args)
-  (bye)))
+  (exit-program)))
 
 
 #+clisp (saveinitmem "critique" :quiet t :norc t :executable t :init-function 'main)

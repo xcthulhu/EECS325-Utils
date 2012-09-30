@@ -1,3 +1,4 @@
+(load "exit-program")
 (load "lisp-unit") 
 (load "exercise-tests")
 (use-package :lisp-unit)
@@ -16,7 +17,7 @@
        ))
   (load (car args))
   (apply #'run-named-tests (cdr args))
-  (bye)))
+  (exit-program)))
 
 #+clisp (saveinitmem "run-tests" :quiet t :norc t :executable t :init-function 'main)
 #+sbcl (sb-ext:save-lisp-and-die "run-tests" :executable t :toplevel 'main)
