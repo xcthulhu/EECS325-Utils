@@ -1,6 +1,9 @@
 (load "babel")
+(load "ddr")
 (load "lisp-unit") 
 (load "exercise-tests")
+(load "ddr-tests")
+(load "ddr-exs-tests")
 (use-package :lisp-unit)
 
 (defun main ()
@@ -8,6 +11,7 @@
   (let ((args (cdr (get-args))))
   (load (car args))
   (apply #'run-named-tests (cdr args))
+  (format t "~%")
   (exit-program)))
 
 #+clisp (saveinitmem "run-tests" :quiet t :norc t :executable t :init-function 'main)

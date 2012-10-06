@@ -28,12 +28,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 ;;; 03/05/05 Expanded documentation on Monkeys and Bananas [CKR]
 ;;; 03/05/05 Added Peano addition example [CKR]
 
-
-(defpackage #:ddr-tests
-  (:use #:common-lisp #:lisp-unit #:ddr)
-  )
-
-(in-package :ddr-tests)
+(use-package :common-lisp)
+(use-package :lisp-unit)
+(use-package :ddr)
 
 ;;; Simple ancestry-type knowledge base.
 ;;;

@@ -1254,4 +1254,4 @@ d)</pre> pre</html>"))
     (assert-false (pat-match pat '(member '(a) '((a) (b)) :test #'equal)))
     ))
 
-(provide "exercise-tests")
+;(provide "exercise-tests")

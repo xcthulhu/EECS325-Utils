@@ -1,6 +1,3 @@
-(in-package :ddr-tests)
-
-
 #|
 Copyright (c) 2007 Christopher K. Riesbeck
 
@@ -32,6 +29,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 ;;; 02/09/08 Added a test to MEMBER [CKR]
 ;;; 02/07/08 Added another test to ALL-DIFFERENT (from Jeremy Meisel) [CKR]
 ;;; 02/02/08 Added tests to MEMBER [CKR]
+(use-package :common-lisp)
+(use-package :lisp-unit)
+(use-package :ddr)
 
 ;;; MEMBER
 
